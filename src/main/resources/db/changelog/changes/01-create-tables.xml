@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="01" author="person1">
+        <!-- Таблица DVD -->
+        <createTable tableName="dvds">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="director" type="varchar(255)"/>
+            <column name="release_year" type="int"/>
+            <column name="genre" type="varchar(100)"/>
+            <column name="rental_rate_per_day" type="decimal(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text"/>
+            <column name="quantity" type="int" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="available_quantity" type="int" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Таблица пользователей -->
+        <createTable tableName="users">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="phone" type="varchar(50)"/>
+            <column name="address" type="text"/>
+        </createTable>
+
+        <!-- Таблица аренды -->
+        <createTable tableName="rentals">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dvd_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_rental_dvd" references="dvds(id)"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_rental_user" references="users(id)"/>
+            </column>
+            <column name="rental_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="due_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="return_date" type="date"/>
+            <column name="total_cost" type="decimal(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_returned" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+<changeSet id="02" author="person1">
+    <!-- Добавление DVD-дисков -->
+    <insert tableName="dvds">
+        <column name="title">Титаник</column>
+        <column name="director">Джеймс Кэмерон</column>
+        <column name="release_year">1997</column>
+        <column name="genre">Драма</column>
+        <column name="rental_rate_per_day">2.99</column>
+        <column name="description">Знаменитый фильм о крушении "непотопляемого" корабля</column>
+        <column name="quantity">3</column>
+        <column name="available_quantity">3</column>
+    </insert>
+
+    <insert tableName="dvds">
+        <column name="title">Матрица</column>
+        <column name="director">Вачовски</column>
+        <column name="release_year">1999</column>
+        <column name="genre">Научная фантастика</column>
+        <column name="rental_rate_per_day">2.99</column>
+        <column name="description">Культовый фильм о виртуальной реальности</column>
+        <column name="quantity">5</column>
+        <column name="available_quantity">5</column>
+    </insert>
+
+    <insert tableName="dvds">
+        <column name="title">Властелин колец: Братство кольца</column>
+        <column name="director">Питер Джексон</column>
+        <column name="release_year">2001</column>
+        <column name="genre">Фэнтези</column>
+        <column name="rental_rate_per_day">3.99</column>
+        <column name="description">Экранизация первой части трилогии Дж.Р.Р. Толкина</column>
+        <column name="quantity">2</column>
+        <column name="available_quantity">2</column>
+    </insert>
+
+    <!-- Добавление пользователей -->
+    <insert tableName="users">
+        <column name="name">Иван Иванов</column>
+        <column name="email">ivan@example.com</column>
+        <column name="phone">+380501234567</column>
+        <column name="address">г. Киев, ул. Примерная, 123</column>
+    </insert>
+
+    <insert tableName="users">
+        <column name="name">Мария Петрова</column>
+        <column name="email">maria@example.com</column>
+        <column name="phone">+380671234567</column>
+        <column name="address">г. Львов, ул. Главная, 45</column>
+    </insert>
+</changeSet>
+</databaseChangeLog>
