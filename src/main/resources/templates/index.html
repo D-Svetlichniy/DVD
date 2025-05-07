@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="jumbotron bg-light p-5 rounded mb-4">
+        <h1 class="display-4">Welcome to DVD Rental Service</h1>
+        <p class="lead">Your classic Netflix 1997 clone - rent physical DVDs today!</p>
+        <hr class="my-4">
+        <p>Browse our collection of DVDs, manage users, and handle rentals all in one place.</p>
+        <a class="btn btn-primary btn-lg" th:href="@{/dvds}" role="button">
+            <i class="fas fa-film me-2"></i>Browse DVDs
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card card-shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-film text-primary me-2"></i>Browse DVDs
+                    </h5>
+                    <p class="card-text">Explore our vast collection of DVDs. Find movies by title, genre, or director.</p>
+                    <a th:href="@{/dvds}" class="btn btn-outline-primary">View All DVDs</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card card-shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-user text-success me-2"></i>Manage Users
+                    </h5>
+                    <p class="card-text">Register new users, update their information, or view their rental history.</p>
+                    <a th:href="@{/users}" class="btn btn-outline-success">Manage Users</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card card-shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-exchange-alt text-danger me-2"></i>Handle Rentals
+                    </h5>
+                    <p class="card-text">Rent DVDs to users, track active rentals, and process returns.</p>
+                    <div class="d-grid gap-2">
+                        <a th:href="@{/rentals}" class="btn btn-outline-danger">View Rentals</a>
+                        <a th:href="@{/rentals/new}" class="btn btn-danger">New Rental</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

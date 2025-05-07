@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${availableOnly ? 'Available DVDs' : (unavailableOnly ? 'Unavailable DVDs' : 'All DVDs')}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 th:text="${availableOnly ? 'Available DVDs' : (unavailableOnly ? 'Unavailable DVDs' : 'All DVDs')}"></h1>
+        <div>
+            <a th:href="@{/dvds/add}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Add New DVD
+            </a>
+        </div>
+    </div>
+
+    <!-- Фильтры и поиск -->
+    <div class="card mb-4 card-shadow">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <form th:action="@{/dvds}" method="get" class="d-flex">
+                        <input type="text" name="search" class="form-control me-2" placeholder="Search by title, genre or director..."
+                               th:value="${search}">
+                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="btn-group w-100" role="group">
+                        <a th:href="@{/dvds}" class="btn" th:classappend="${!availableOnly && !unavailableOnly ? 'btn-primary' : 'btn-outline-primary'}">All</a>
+                        <a th:href="@{/dvds/available}" class="btn" th:classappend="${availableOnly ? 'btn-primary' : 'btn-outline-primary'}">Available</a>
+                        <a th:href="@{/dvds/unavailable}" class="btn" th:classappend="${unavailableOnly ? 'btn-primary' : 'btn-outline-primary'}">Unavailable</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Список DVD -->
+    <div class="card card-shadow">
+        <div class="card-body">
+            <div th:if="${#lists.isEmpty(dvds)}" class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>No DVDs found.
+            </div>
+            <div th:unless="${#lists.isEmpty(dvds)}" class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Director</th>
+                        <th>Genre</th>
+                        <th>Year</th>
+                        <th>Daily Rate</th>
+                        <th>Available</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="dvd : ${dvds}">
+                        <td>
+                            <a th:href="@{/dvds/details/{id}(id=${dvd.id})}" th:text="${dvd.title}"></a>
+                        </td>
+                        <td th:text="${dvd.director}">Director</td>
+                        <td th:text="${dvd.genre}">Genre</td>
+                        <td th:text="${dvd.releaseYear}">Year</td>
+                        <td th:text="${'$' + dvd.rentalRatePerDay}">Rate</td>
+                        <td>
+                            <span th:text="${dvd.availableQuantity + '/' + dvd.quantity}"></span>
+                            <span th:if="${dvd.availableQuantity > 0}" class="badge bg-success ms-2">Available</span>
+                            <span th:if="${dvd.availableQuantity == 0}" class="badge bg-danger ms-2">Out of Stock</span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a th:href="@{/dvds/details/{id}(id=${dvd.id})}" class="btn btn-outline-primary" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a th:href="@{/dvds/edit/{id}(id=${dvd.id})}" class="btn btn-outline-secondary" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a th:if="${dvd.availableQuantity > 0}" th:href="@{/rentals/new(dvdId=${dvd.id})}"
+                                   class="btn btn-outline-success" title="Rent">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+                                <button type="button" class="btn btn-outline-danger" title="Delete"
+                                        data-bs-toggle="modal" th:data-bs-target="${'#deleteModal-' + dvd.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+
+                            <!-- Modal for delete confirmation -->
+                            <div class="modal fade" th:id="${'deleteModal-' + dvd.id}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Confirm Delete</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete the DVD "<span th:text="${dvd.title}"></span>"?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <a th:href="@{/dvds/delete/{id}(id=${dvd.id})}" class="btn btn-danger">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

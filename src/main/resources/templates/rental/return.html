@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>Return DVD</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="card card-shadow">
+    <div class="card-header">
+      <h3>Return DVD</h3>
+    </div>
+    <div class="card-body">
+      <form th:action="@{/rentals/return/{id}(id=${rental.id})}" method="post">
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle me-2"></i>
+          You are about to return the DVD <strong th:text="${rental.dvdTitle}"></strong>
+          rented by <strong th:text="${rental.userName}"></strong>.
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Rental Date</label>
+            <p class="form-control-plaintext" th:text="${#temporals.format(rental.rentalDate, 'dd-MM-yyyy')}">Rental Date</p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Due Date</label>
+            <p class="form-control-plaintext" th:text="${#temporals.format(rental.dueDate, 'dd-MM-yyyy')}">Due Date</p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label">Total Cost</label>
+            <p class="form-control-plaintext" th:text="${'$' + rental.totalCost}">Cost</p>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Status</label>
+            <p class="form-control-plaintext">
+              <span th:if="${#dates.createNow() > rental.dueDate}" class="badge bg-danger">Overdue</span>
+              <span th:unless="${#dates.createNow() > rental.dueDate}" class="badge bg-primary">On Time</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <a th:href="@{/rentals}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Cancel
+          </a>
+          <button type="submit" class="btn btn-success">
+            <i class="fas fa-check me-2"></i>Confirm Return
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

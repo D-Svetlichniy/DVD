@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>Rental Details</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="card card-shadow">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3>Rental Details</h3>
+        <div>
+          <a th:href="@{/rentals}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to List
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h4>DVD Information</h4>
+          <p>
+            <strong>Title:</strong>
+            <a th:href="@{/dvds/details/{id}(id=${rental.dvdId})}" th:text="${rental.dvdTitle}"></a>
+          </p>
+          <hr>
+          <h4>User Information</h4>
+          <p>
+            <strong>Name:</strong>
+            <a th:href="@{/users/details/{id}(id=${rental.userId})}" th:text="${rental.userName}"></a>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h5 class="card-title">Rental Information</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Status
+                  <span th:if="${rental.isReturned}" class="badge bg-success">Returned</span>
+                  <span th:unless="${rental.isReturned}">
+                                            <span th:if="${#dates.createNow() > rental.dueDate}" class="badge bg-danger">Overdue</span>
+                                            <span th:unless="${#dates.createNow() > rental.dueDate}" class="badge bg-primary">Active</span>
+                                        </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Rental Date
+                  <span th:text="${#temporals.format(rental.rentalDate, 'dd-MM-yyyy')}"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Due Date
+                  <span th:text="${#temporals.format(rental.dueDate, 'dd-MM-yyyy')}"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center" th:if="${rental.isReturned}">
+                  Return Date
+                  <span th:text="${#temporals.format(rental.returnDate, 'dd-MM-yyyy')}"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Total Cost
+                  <span class="badge bg-primary rounded-pill" th:text="${'$' + rental.totalCost}"></span>
+                </li>
+              </ul>
+              <div class="d-grid gap-2 mt-3" th:if="${!rental.isReturned}">
+                <a th:href="@{/rentals/return/{id}(id=${rental.id})}" class="btn btn-success">
+                  <i class="fas fa-undo me-2"></i>Return DVD
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

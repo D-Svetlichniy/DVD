@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">DVD Rental Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            padding-top: 56px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+        }
+        footer {
+            margin-top: auto;
+            padding: 1rem 0;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .nav-link {
+            font-weight: 500;
+        }
+        .card-shadow {
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+    </style>
+</head>
+<body>
+<!-- Навигационная панель -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-film me-2"></i>DVD Rental
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dvdDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        DVDs
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dvdDropdown">
+                        <li><a class="dropdown-item" th:href="@{/dvds}">All DVDs</a></li>
+                        <li><a class="dropdown-item" th:href="@{/dvds/available}">Available DVDs</a></li>
+                        <li><a class="dropdown-item" th:href="@{/dvds/add}">Add New DVD</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Users
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" th:href="@{/users}">All Users</a></li>
+                        <li><a class="dropdown-item" th:href="@{/users/add}">Add New User</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="rentalDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Rentals
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="rentalDropdown">
+                        <li><a class="dropdown-item" th:href="@{/rentals}">All Rentals</a></li>
+                        <li><a class="dropdown-item" th:href="@{/rentals/active}">Active Rentals</a></li>
+                        <li><a class="dropdown-item" th:href="@{/rentals/overdue}">Overdue Rentals</a></li>
+                        <li><a class="dropdown-item" th:href="@{/rentals/returned}">Returned DVDs</a></li>
+                        <li><a class="dropdown-item" th:href="@{/rentals/new}">New Rental</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" th:action="@{/dvds}" method="get">
+                <input class="form-control me-2" type="search" placeholder="Search DVDs..." name="search"
+                       th:value="${search}">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Основной контент -->
+<div class="container mt-4 content">
+    <!-- Сообщения об успехе/ошибке -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Вставка контента из других шаблонов -->
+    <div layout:fragment="content"></div>
+</div>
+
+<!-- Подвал -->
+<footer class="text-center">
+    <div class="container">
+        <p class="mb-0">
+            <span>&copy; 2023 DVD Rental Service</span>
+            <span class="mx-2">•</span>
+            <span>Netflix 1997 Clone</span>
+        </p>
+    </div>
+</footer>
+
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Активация текущего пункта меню
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const href = link.getAttribute('href');
+            if (currentPath === href || (href !== '/' && currentPath.startsWith(href))) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>
