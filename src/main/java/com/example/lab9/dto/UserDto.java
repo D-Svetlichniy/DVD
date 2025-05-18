@@ -21,4 +21,9 @@ public class UserDto extends BaseDto {
     private String phone;
 
     private String address;
+
+    @Override
+    public void setId(Long id) {
+        super.setId(id);
+    }
 }
