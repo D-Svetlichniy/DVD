@@ -1,10 +1,13 @@
 package com.example.lab9.service;
 
-import com.example.dvdrentalservice.dto.DvdDto;
+import com.example.lab9.dto.DvdDto;
+import com.example.lab9.dto.DvdDto;
 
 import java.util.List;
 
 public interface DvdService extends BaseService<DvdDto, Long> {
+
+    com.example.lab9.dto.DvdDto save(com.example.lab9.dto.DvdDto dvdDto);
 
     List<DvdDto> findByTitleContaining(String title);
 

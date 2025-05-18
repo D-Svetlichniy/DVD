@@ -9,9 +9,11 @@ import com.example.lab9.service.RentalService;
 import com.example.lab9.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -31,14 +33,32 @@ public class RentalControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private RentalService rentalService;
 
-    @MockBean
+    @Autowired
     private DvdService dvdService;
 
-    @MockBean
+    @Autowired
     private UserService userService;
+
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public RentalService rentalService() {
+            return Mockito.mock(RentalService.class);
+        }
+
+        @Bean
+        public DvdService dvdService() {
+            return Mockito.mock(DvdService.class);
+        }
+
+        @Bean
+        public UserService userService() {
+            return Mockito.mock(UserService.class);
+        }
+    }
 
     private RentalDto sampleRental;
     private DvdDto sampleDvd;

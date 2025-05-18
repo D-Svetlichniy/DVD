@@ -4,16 +4,20 @@ import com.example.lab9.dto.DvdDto;
 import com.example.lab9.service.DvdService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -25,10 +29,18 @@ public class DvdControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private DvdService dvdService;
 
     private DvdDto sampleDvd;
+
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public DvdService dvdService() {
+            return Mockito.mock(DvdService.class);
+        }
+    }
 
     @BeforeEach
     public void setUp() {
@@ -36,11 +48,13 @@ public class DvdControllerTest {
         sampleDvd.setId(1L);
         sampleDvd.setTitle("Matrix");
         sampleDvd.setDirector("Wachowski");
-        sampleDvd.setReleaseYear(1999);
+        sampleDvd.setReleaseDate(LocalDate.ofEpochDay(1999));
         sampleDvd.setGenre("Sci-Fi");
         sampleDvd.setRentalRatePerDay(new BigDecimal("2.99"));
         sampleDvd.setQuantity(3);
         sampleDvd.setAvailableQuantity(2);
+
+        Mockito.reset(dvdService);
     }
 
     @Test

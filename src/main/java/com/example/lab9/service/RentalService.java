@@ -1,7 +1,7 @@
 package com.example.lab9.service;
 
-import com.example.dvdrentalservice.dto.RentalCreateDto;
-import com.example.dvdrentalservice.dto.RentalDto;
+import com.example.lab9.dto.RentalCreateDto;
+import com.example.lab9.dto.RentalDto;
 
 import java.time.LocalDate;
 import java.util.List;

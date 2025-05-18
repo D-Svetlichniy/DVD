@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -19,7 +20,7 @@ public class DvdDto extends BaseDto {
     private String director;
 
     @PastOrPresent(message = "Release year must be in the past or present")
-    private Integer releaseYear;
+    private LocalDate releaseDate;
 
     private String genre;
 

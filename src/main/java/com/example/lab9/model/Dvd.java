@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import java.time.LocalDate;
 import java.math.BigDecimal;
 
 @Entity
@@ -30,7 +30,7 @@ public class Dvd extends BaseEntity {
 
     @PastOrPresent(message = "Release year must be in the past or present")
     @Column(name = "release_year")
-    private Integer releaseYear;
+    private LocalDate releaseDate;
 
     private String genre;
 

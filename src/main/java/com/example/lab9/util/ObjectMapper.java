@@ -1,11 +1,11 @@
 package com.example.lab9.util;
 
-import com.example.dvdrentalservice.dto.DvdDto;
-import com.example.dvdrentalservice.dto.RentalDto;
-import com.example.dvdrentalservice.dto.UserDto;
-import com.example.dvdrentalservice.model.Dvd;
-import com.example.dvdrentalservice.model.Rental;
-import com.example.dvdrentalservice.model.User;
+import com.example.lab9.dto.DvdDto;
+import com.example.lab9.dto.RentalDto;
+import com.example.lab9.dto.UserDto;
+import com.example.lab9.model.Dvd;
+import com.example.lab9.model.Rental;
+import com.example.lab9.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,7 +20,7 @@ public class ObjectMapper {
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
         dto.setDirector(entity.getDirector());
-        dto.setReleaseYear(entity.getReleaseYear());
+        dto.setReleaseDate(entity.getReleaseDate());
         dto.setGenre(entity.getGenre());
         dto.setRentalRatePerDay(entity.getRentalRatePerDay());
         dto.setDescription(entity.getDescription());
@@ -39,7 +39,7 @@ public class ObjectMapper {
         entity.setId(dto.getId());
         entity.setTitle(dto.getTitle());
         entity.setDirector(dto.getDirector());
-        entity.setReleaseYear(dto.getReleaseYear());
+        entity.setReleaseDate(dto.getReleaseDate());
         entity.setGenre(dto.getGenre());
         entity.setRentalRatePerDay(dto.getRentalRatePerDay());
         entity.setDescription(dto.getDescription());

@@ -8,7 +8,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 <changeSet id="02" author="person1">
     <!-- Добавление DVD-дисков -->
     <insert tableName="dvds">
-        <column name="title">Титаник</column>
+        <column name="title" value="Титаник"/>
         <column name="director">Джеймс Кэмерон</column>
         <column name="release_year">1997</column>
         <column name="genre">Драма</column>
@@ -19,7 +19,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     </insert>
 
     <insert tableName="dvds">
-        <column name="title">Матрица</column>
+        <column name="title" value="Матрица"/>
         <column name="director">Вачовски</column>
         <column name="release_year">1999</column>
         <column name="genre">Научная фантастика</column>
@@ -30,7 +30,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     </insert>
 
     <insert tableName="dvds">
-        <column name="title">Властелин колец: Братство кольца</column>
+        <column name="title" value="Властелин колец: Братство кольца"/>
         <column name="director">Питер Джексон</column>
         <column name="release_year">2001</column>
         <column name="genre">Фэнтези</column>

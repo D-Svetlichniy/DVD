@@ -63,7 +63,7 @@
                         </td>
                         <td th:text="${dvd.director}">Director</td>
                         <td th:text="${dvd.genre}">Genre</td>
-                        <td th:text="${dvd.releaseYear}">Year</td>
+                        <td th:text="${#dates.format(dvd.releaseDate, 'yyyy')}">Year</td>
                         <td th:text="${'$' + dvd.rentalRatePerDay}">Rate</td>
                         <td>
                             <span th:text="${dvd.availableQuantity + '/' + dvd.quantity}"></span>
