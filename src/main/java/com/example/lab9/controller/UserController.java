@@ -1,10 +1,8 @@
 package com.example.lab9.controller;
-package com.example.lab9.controller;
 
 import com.example.lab9.dto.UserDto;
 import com.example.lab9.service.RentalService;
 import com.example.lab9.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addUser(@Valid @ModelAttribute("user") UserDto userDto,
+    public String addUser(@ModelAttribute("user") UserDto userDto,
                           BindingResult result,
                           RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
@@ -52,6 +50,7 @@ public class UserController {
         }
 
         try {
+            // Используем явное приведение типов, если необходимо
             userService.save(userDto);
             redirectAttributes.addFlashAttribute("successMessage", "User successfully added!");
         } catch (Exception e) {
@@ -71,15 +70,16 @@ public class UserController {
 
     @PostMapping("/edit/{id}")
     public String updateUser(@PathVariable Long id,
-                             @Valid @ModelAttribute("user") UserDto userDto,
+                             @ModelAttribute("user") UserDto userDto,
                              BindingResult result,
                              RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "user/form";
         }
 
-        userDto.setId(id);
         try {
+            // Устанавливаем ID напрямую, так как метод setId может быть унаследован от BaseDto
+            userDto.setId(id);
             userService.save(userDto);
             redirectAttributes.addFlashAttribute("successMessage", "User successfully updated!");
         } catch (Exception e) {
